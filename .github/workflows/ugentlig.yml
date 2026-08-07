@@ -1,0 +1,69 @@
+name: Ugentlig teatermonitor
+
+on:
+  schedule:
+    # Mandag 05:30 UTC = 07:30 dansk sommertid (06:30 om vinteren).
+    - cron: "30 5 * * 1"
+  workflow_dispatch:
+
+# Nødvendigt fordi jobbet skriver hukommelsen (state/set.json) og den
+# offentlige side (docs/index.html) tilbage til repoet.
+permissions:
+  contents: write
+
+concurrency:
+  group: teatermonitor
+  cancel-in-progress: false
+
+jobs:
+  koer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Installér afhængigheder
+        run: pip install -r requirements.txt
+
+      # Fejler afsendelsen (fx manglende nøgle), skal siden stadig bygges.
+      # Trinnet markeres rødt i kørslen, men stopper ikke resten.
+      - name: Hent, filtrér og send digest
+        continue-on-error: true
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          TEATERMONITOR_MODTAGERE: ${{ secrets.TEATERMONITOR_MODTAGERE }}
+          TEATERMONITOR_AFSENDER: ${{ secrets.TEATERMONITOR_AFSENDER }}
+        run: python monitor.py
+
+      - name: Byg den offentlige side
+        run: |
+          python byg_side.py
+          mkdir -p docs
+          cp udbakke/side.html docs/index.html
+
+      - name: Gem hukommelse og side
+        run: |
+          git config user.name  "teatermonitor"
+          git config user.email "teatermonitor@users.noreply.github.com"
+          git add docs/index.html
+          # set.json findes kun hvis afsendelsen lykkedes — den er systemets
+          # hukommelse om hvad du allerede har set.
+          git add state/set.json || true
+          if git diff --staged --quiet; then
+            echo "Ingen ændringer at gemme."
+          else
+            git commit -m "Ugentlig opdatering $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Gem logfil som artefakt ved fejl
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: teatermonitor-log
+          path: state/koersler.log
+          if-no-files-found: ignore
