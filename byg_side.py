@@ -20,9 +20,13 @@ MAANEDER = ["", "januar", "februar", "marts", "april", "maj", "juni", "juli",
             "august", "september", "oktober", "november", "december"]
 UGEDAGE = ["man", "tir", "ons", "tor", "fre", "lør", "søn"]
 
-SIDE = """<meta charset="utf-8">
+SIDE = """<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Børneteater i Østjylland</title>
+<meta name="description" content="Hele sæsonens scenekunst for børn i Østjylland — teater, dukketeater, koncerter og cirkus. Silkeborg og Aarhus i centrum.">
 <style>
 :root{
   --ground:#eceee8; --panel:#f7f8f5; --ink:#1b2019; --daemp:#5f6b5e;
@@ -155,6 +159,8 @@ footer a{color:var(--sage)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="baand">
 <header>
@@ -336,6 +342,8 @@ document.getElementById("klubber").innerHTML = KLUBBER.map(k=>
 
 tegn();
 </script>
+</body>
+</html>
 """
 
 
