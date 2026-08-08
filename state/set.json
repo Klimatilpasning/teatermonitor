@@ -79,6 +79,10 @@
   "titel": "Borgvold Søndag - Hatteteater med Honning Banden",
   "set": "2026-08-08"
  },
+ "wp:Randers Teater:8528": {
+  "titel": "ETA – La Norma",
+  "set": "2026-08-08"
+ },
  "kultunaut:19796900": {
   "titel": "Askepot",
   "set": "2026-08-08"
@@ -131,10 +135,6 @@
   "titel": "Farvel fugl (Kl. 13)",
   "set": "2026-08-08"
  },
- "kultunaut:19898840": {
-  "titel": "TØJ",
-  "set": "2026-08-08"
- },
  "kultunaut:20202620": {
   "titel": "Femlingerne møder dinoen Leif - Familieunderholdning med Wulffmorgenthaler",
   "set": "2026-08-08"
@@ -159,6 +159,10 @@
   "titel": "Onkel Reje & Erna show",
   "set": "2026-08-08"
  },
+ "wp:Jysk Musikteater:9058": {
+  "titel": "Rosa",
+  "set": "2026-08-08"
+ },
  "kultunaut:19484801": {
   "titel": "Rosa fra Rouladegade",
   "set": "2026-08-08"
@@ -169,6 +173,10 @@
  },
  "kultunaut:19950513": {
   "titel": "Familiejazz: Bi Bob & Bibi med Aarhus Jazz Orchestra & Carl Quist-Møller - Nøj, det er jazz for børn",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:9 EPISTLER OG EN BOLLE MED SMELTET OST:2026-09-17": {
+  "titel": "9 EPISTLER OG EN BOLLE MED SMELTET OST",
   "set": "2026-08-08"
  },
  "kultunaut:20071999": {
@@ -204,6 +212,10 @@
   "set": "2026-08-08"
  },
  "kultunaut:19940934": {
+  "titel": "Alfons Åbergs Fødselsdagsfest",
+  "set": "2026-08-08"
+ },
+ "blok:Silkeborg Teater (børneteater):Alfons Åbergs Fødselsdagsfest:2026-09-19": {
   "titel": "Alfons Åbergs Fødselsdagsfest",
   "set": "2026-08-08"
  },
@@ -251,6 +263,14 @@
   "titel": "VBV - Verdens bedste veninder",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Bænken:2026-09-22": {
+  "titel": "Bænken",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:THE GAME:2026-09-24": {
+  "titel": "THE GAME",
+  "set": "2026-08-08"
+ },
  "kultunaut:20162217": {
   "titel": "Børneteater: Det er ganske vist",
   "set": "2026-08-08"
@@ -283,6 +303,10 @@
   "titel": "Fang Vinden",
   "set": "2026-08-08"
  },
+ "kultunaut:19976520": {
+  "titel": "Musiksanseriet",
+  "set": "2026-08-08"
+ },
  "kultunaut:19899399": {
   "titel": "Ivalus første Sang",
   "set": "2026-08-08"
@@ -297,6 +321,10 @@
  },
  "kultunaut:19796917": {
   "titel": "Kender du hende?",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:DET BEGYNDER AT BLIVE KOLDT OM FØDDERNE:2026-10-07": {
+  "titel": "DET BEGYNDER AT BLIVE KOLDT OM FØDDERNE",
   "set": "2026-08-08"
  },
  "kultunaut:20203347": {
@@ -327,12 +355,12 @@
   "titel": "Kender du hende?",
   "set": "2026-08-08"
  },
- "kultunaut:19399541": {
-  "titel": "Otto er et næsehorn",
+ "blok:Teatret Gruppe 38:LYDLØST BRÆNDER AHORNTRÆET:2026-10-11": {
+  "titel": "LYDLØST BRÆNDER AHORNTRÆET",
   "set": "2026-08-08"
  },
- "kultunaut:20130751": {
-  "titel": "Se!",
+ "kultunaut:19399541": {
+  "titel": "Otto er et næsehorn",
   "set": "2026-08-08"
  },
  "blok:Silkeborg Teater (børneteater):WOW!- En hjertevarm kloveforestilling for børn og deres voksne Søndag:2026-10-11": {
@@ -491,6 +519,10 @@
   "titel": "Kender du hende?",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Lille Bjørn:2026-10-21": {
+  "titel": "Lille Bjørn",
+  "set": "2026-08-08"
+ },
  "kultunaut:20045543": {
   "titel": "Bølgebryder (Teater 7 år+)",
   "set": "2026-08-08"
@@ -505,6 +537,10 @@
  },
  "kultunaut:19899386": {
   "titel": "Tiny",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:BØLGEBRYDER:2026-10-29": {
+  "titel": "BØLGEBRYDER",
   "set": "2026-08-08"
  },
  "kultunaut:19808979": {
@@ -551,12 +587,20 @@
   "titel": "Morgengry",
   "set": "2026-08-08"
  },
+ "blok:Teatret Gruppe 38:HYDRA – VENTER PÅ KRISEN:2026-11-12": {
+  "titel": "HYDRA – VENTER PÅ KRISEN",
+  "set": "2026-08-08"
+ },
  "kultunaut:20045546": {
   "titel": "Det hemmelige bibliotek (Teater 6 år+)",
   "set": "2026-08-08"
  },
  "kultunaut:19932050": {
   "titel": "Onkel Reje",
+  "set": "2026-08-08"
+ },
+ "blok:Silkeborg Teater (børneteater):ARM OG BEN - CHA-CHA-CHA Søndag:2026-11-15": {
+  "titel": "ARM OG BEN - CHA-CHA-CHA Søndag",
   "set": "2026-08-08"
  },
  "kultunaut:19999270": {
@@ -587,6 +631,10 @@
   "titel": "Et juleeventyr",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Fridas Store Rejse:2026-11-21": {
+  "titel": "Fridas Store Rejse",
+  "set": "2026-08-08"
+ },
  "kultunaut:20045563": {
   "titel": "Historien om Karl Bertil Jonssons Juleaften (teater 7 år+)",
   "set": "2026-08-08"
@@ -613,6 +661,10 @@
  },
  "kultunaut:19886706": {
   "titel": "Snemanden",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:DE USKREVNE:2026-11-29": {
+  "titel": "DE USKREVNE",
   "set": "2026-08-08"
  },
  "kultunaut:20007019": {
@@ -675,6 +727,10 @@
   "titel": "En lille nisse rejste",
   "set": "2026-08-08"
  },
+ "blok:Silkeborg Teater (børneteater):JULEMANDENS GAVE - En hyggelig juleforestilling for små nisser og deres familie Søndag:2026-12-06": {
+  "titel": "JULEMANDENS GAVE - En hyggelig juleforestilling for små nisser og deres familie Søndag",
+  "set": "2026-08-08"
+ },
  "kultunaut:19941165": {
   "titel": "Julemandens Gave",
   "set": "2026-08-08"
@@ -699,6 +755,10 @@
   "titel": "The Julekalender",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Broder Sol, Søster Måne:2026-12-12": {
+  "titel": "Broder Sol, Søster Måne",
+  "set": "2026-08-08"
+ },
  "kultunaut:19999249": {
   "titel": "En lille nisse rejste",
   "set": "2026-08-08"
@@ -713,6 +773,10 @@
  },
  "kultunaut:19941205": {
   "titel": "Den Store Nisseprøve",
+  "set": "2026-08-08"
+ },
+ "blok:Silkeborg Teater (børneteater):Den Store Nisseprøve Lørdag den:2026-12-19": {
+  "titel": "Den Store Nisseprøve Lørdag den",
   "set": "2026-08-08"
  },
  "kultunaut:19733766": {
@@ -783,6 +847,10 @@
   "titel": "Lille frk. Larsens store kærlighed",
   "set": "2026-08-08"
  },
+ "blok:Teatret Gruppe 38:MARIAS TESTAMENTE:2027-01-26": {
+  "titel": "MARIAS TESTAMENTE",
+  "set": "2026-08-08"
+ },
  "kultunaut:20188054": {
   "titel": "TITANIQUE",
   "set": "2026-08-08"
@@ -823,16 +891,16 @@
   "titel": "Sallys Far",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Se mørket:2027-02-06": {
+  "titel": "Se mørket",
+  "set": "2026-08-08"
+ },
  "kultunaut:19908595": {
   "titel": "Albert",
   "set": "2026-08-08"
  },
  "kultunaut:20002708": {
   "titel": "Peter Kanin",
-  "set": "2026-08-08"
- },
- "kultunaut:19898885": {
-  "titel": "TID",
   "set": "2026-08-08"
  },
  "kultunaut:19930210": {
@@ -851,6 +919,10 @@
   "titel": "Sallys Far",
   "set": "2026-08-08"
  },
+ "blok:Teatret Gruppe 38:KALD PÅ MIG IGEN:2027-02-14": {
+  "titel": "KALD PÅ MIG IGEN",
+  "set": "2026-08-08"
+ },
  "kultunaut:20130771": {
   "titel": "Vi skal gøre det igen",
   "set": "2026-08-08"
@@ -867,8 +939,20 @@
   "titel": "Sigurds Danmarkshistorie",
   "set": "2026-08-08"
  },
+ "wp:Jysk Musikteater:9359": {
+  "titel": "Fyrtøjet",
+  "set": "2026-08-08"
+ },
+ "blok:Silkeborg Teater (børneteater):Fyrtøjet Søndag den:2027-02-21": {
+  "titel": "Fyrtøjet Søndag den",
+  "set": "2026-08-08"
+ },
  "kultunaut:20006871": {
   "titel": "Mens vi håber på en lysning",
+  "set": "2026-08-08"
+ },
+ "blok:Teater Refleksion:Jytte og Lille Sol:2027-02-27": {
+  "titel": "Jytte og Lille Sol",
   "set": "2026-08-08"
  },
  "kultunaut:19999301": {
@@ -887,8 +971,20 @@
   "titel": "Da Lille Ræv Blev Storebror",
   "set": "2026-08-08"
  },
+ "blok:Silkeborg Teater (børneteater):Da Lille Ræv Blev Storebror Søndag:2027-03-07": {
+  "titel": "Da Lille Ræv Blev Storebror Søndag",
+  "set": "2026-08-08"
+ },
  "kultunaut:19898864": {
   "titel": "Hvordan mon?",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:RE-EVOLUTION:2027-03-10": {
+  "titel": "RE-EVOLUTION",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8584": {
+  "titel": "ETA – Fjeldgænger",
   "set": "2026-08-08"
  },
  "kultunaut:20102561": {
@@ -899,6 +995,10 @@
   "titel": "Sallys Far",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Dukker op!:2027-03-13": {
+  "titel": "Dukker op!",
+  "set": "2026-08-08"
+ },
  "kultunaut:19917539": {
   "titel": "Sigurds Danmarkshistorie",
   "set": "2026-08-08"
@@ -907,8 +1007,16 @@
   "titel": "Sigurds Danmarkshistorie",
   "set": "2026-08-08"
  },
+ "blok:Teatret Gruppe 38:ÅRHUNDREDETS ROSE:2027-03-17": {
+  "titel": "ÅRHUNDREDETS ROSE",
+  "set": "2026-08-08"
+ },
  "kultunaut:19992692": {
   "titel": "Til stjernerne falder",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:FJELDGÆNGER:2027-03-31": {
+  "titel": "FJELDGÆNGER",
   "set": "2026-08-08"
  },
  "kultunaut:19870442": {
@@ -917,6 +1025,10 @@
  },
  "kultunaut:19941043": {
   "titel": "Lille Frk. Larsens store Kærlighed",
+  "set": "2026-08-08"
+ },
+ "blok:Silkeborg Teater (børneteater):Lille Frk. Larsens store Kærlighed Lørdag den:2027-04-03": {
+  "titel": "Lille Frk. Larsens store Kærlighed Lørdag den",
   "set": "2026-08-08"
  },
  "kultunaut:19992684": {
@@ -937,6 +1049,10 @@
  },
  "kultunaut:19898974": {
   "titel": "Regnbuebillen",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:MED ØRERNE PÅ STORMKROG:2027-04-06": {
+  "titel": "MED ØRERNE PÅ STORMKROG",
   "set": "2026-08-08"
  },
  "kultunaut:19955115": {
@@ -971,6 +1087,10 @@
   "titel": "Til Stjernerne Falder",
   "set": "2026-08-08"
  },
+ "blok:Teater Refleksion:Himmelsange:2027-04-24": {
+  "titel": "Himmelsange",
+  "set": "2026-08-08"
+ },
  "kultunaut:19898865": {
   "titel": "Kærlighed",
   "set": "2026-08-08"
@@ -983,12 +1103,12 @@
   "titel": "Heksejagt",
   "set": "2026-08-08"
  },
- "blok:Silkeborg Teater (børneteater):jmts.dk.:2027-05-02": {
-  "titel": "jmts.dk.",
-  "set": "2026-08-08"
- },
  "kultunaut:19862797": {
   "titel": "Cirkelines museskole",
+  "set": "2026-08-08"
+ },
+ "blok:Teatret Gruppe 38:HISTORIEN OM POUL:2027-05-30": {
+  "titel": "HISTORIEN OM POUL",
   "set": "2026-08-08"
  },
  "kultunaut:20187788": {
@@ -1001,6 +1121,26 @@
  },
  "kultunaut:19819397": {
   "titel": "Ternet Ninja - Live",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8534": {
+  "titel": "ETA – Forræder",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8547": {
+  "titel": "ETA – KONTIKI",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8550": {
+  "titel": "ETA – Tiny",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8592": {
+  "titel": "ETA – Tommelise",
+  "set": "2026-08-08"
+ },
+ "wp:Randers Teater:8536": {
+  "titel": "ETA – TØJ",
   "set": "2026-08-08"
  },
  "kultunaut:20169152": {
@@ -1021,6 +1161,10 @@
  },
  "kultunaut:20173289": {
   "titel": "Julefortællinger bag nissedørene",
+  "set": "2026-08-08"
+ },
+ "wp:Jysk Musikteater:9721": {
+  "titel": "Kulturkalas – regatta på Jysk Musikteater",
   "set": "2026-08-08"
  },
  "kultunaut:20157513": {
