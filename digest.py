@@ -186,7 +186,7 @@ def byg_html(godkendte: list[Arrangement], nye_id: set[str], conf: dict,
             _afsnit("Inden for 3 uger", snart, nye_id, maks),
             _afsnit("Julesæson – book i god tid", jul, nye_id, maks),
             _afsnit("Store forestillinger – værd at køre efter", store, nye_id, maks),
-            _afsnit(f"Senere i {' og '.join(sorted(kerne))}", kerne_resten, nye_id, maks),
+            _afsnit("Senere i nærområdet", kerne_resten, nye_id, maks),
             _afsnit("Senere i det øvrige Østjylland", oevrig_resten, nye_id, maks),
         ]
         krop = "".join(afsnit)

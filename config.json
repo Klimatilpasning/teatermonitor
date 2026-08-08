@@ -9,13 +9,14 @@
   "smtp_port": 587,
   "smtp_bruger": "",
 
-  "kerne_kommuner": ["Silkeborg", "Aarhus"],
+  "_om_kommuner": "Nærområdet er Aarhus, Ry og Silkeborg. Ry er ikke en egen kommune — den ligger i Skanderborg, som derfor er kerne. Randers er en køretur og står derfor på rejselisten som Kolding: kun store forestillinger slipper igennem.",
+  "kerne_kommuner": ["Silkeborg", "Aarhus", "Skanderborg"],
   "oevrige_kommuner": [
-    "Skanderborg", "Favrskov", "Randers", "Horsens",
+    "Favrskov", "Horsens",
     "Odder", "Syddjurs", "Norddjurs", "Hedensted", "Viborg"
   ],
 
-  "rejse_kommuner": ["Kolding", "Vejle", "Fredericia", "Herning", "Billund"],
+  "rejse_kommuner": ["Randers", "Kolding", "Vejle", "Fredericia", "Herning", "Billund"],
 
   "alder_fra": 4,
   "alder_til": 12,

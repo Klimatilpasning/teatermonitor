@@ -182,7 +182,7 @@ footer a{color:var(--sage)}
            aria-label="Søg i forestillinger">
     <button class="chip varm" id="f-jul" aria-pressed="false">Kun jul</button>
     <button class="chip varm" id="f-stor" aria-pressed="false">Store forestillinger</button>
-    <button class="chip" id="f-kerne" aria-pressed="false">Silkeborg + Aarhus</button>
+    <button class="chip" id="f-kerne" aria-pressed="false">Nærområdet</button>
   </div>
   <div class="filterrk" id="kommuner" style="margin-top:8px"></div>
 </div>
