@@ -5,6 +5,11 @@ on:
     # Mandag 05:30 UTC = 07:30 dansk sommertid (06:30 om vinteren).
     - cron: "30 5 * * 1"
   workflow_dispatch:
+    inputs:
+      alt_som_nyt:
+        description: "Send HELE listen, ikke kun det nye siden sidst"
+        type: boolean
+        default: false
 
 # Nødvendigt fordi jobbet skriver hukommelsen (state/set.json) og den
 # offentlige side (docs/index.html) tilbage til repoet.
@@ -41,7 +46,8 @@ jobs:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           TEATERMONITOR_MODTAGERE: ${{ secrets.TEATERMONITOR_MODTAGERE }}
           TEATERMONITOR_AFSENDER: ${{ secrets.TEATERMONITOR_AFSENDER }}
-        run: python monitor.py
+        # Tom streng ved planlagte kørsler — så sendes kun det nye siden sidst.
+        run: python monitor.py ${{ inputs.alt_som_nyt && '--alt-som-nyt' || '' }}
 
       - name: Byg den offentlige side
         run: |
