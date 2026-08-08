@@ -36,6 +36,43 @@ OPLEVELSES_ORD = [
     "dukkespil", "bamseteater", "sanseoplevelse",
 ]
 
+# Nicheformer: det sanselige, det intime, det eksperimenterende og det
+# antroposofiske. Holdt i en egen liste frem for at blive rørt ind i
+# OPLEVELSES_ORD, så det kan ses hvad udvidelsen henter — og rulles tilbage
+# alene, hvis den viser sig at støje.
+NICHE_ORD = [
+    # sanselig scenekunst
+    "sanseteater", "sanseforestilling", "sansekoncert", "sanselig",
+    "musiksanseri", "sanseri", "babyteater", "vuggestueteater",
+    "sanseunivers", "sanserejse",
+    # små, intime og private visninger
+    "stueteater", "dagligstueteater", "hjemmeteater", "salonforestilling",
+    "intimteater", "kammerspil", "mikroteater", "arbejdsvisning",
+    "åben prøve", "åbne prøver", "work in progress", "prøvevisning",
+    "for et lille publikum", "intim forestilling",
+    # eksperimenterende scenekunst
+    "eksperimenterende", "eksperimental", "site-specific", "stedsspecifik",
+    "immersiv", "installationsteater", "vandreteater", "totalteater",
+    "materialeteater", "bevægelsesteater", "billedteater", "lydteater",
+    # musikalske former
+    "musikfortælling", "musikdramatik", "koncertteater", "tonefortælling",
+    "musikalsk forestilling", "musikalsk fortælling", "musikalsk eventyr",
+    # Steiner og antroposofi
+    "eurytmi", "eurytmisk", "rudolf steiner", "steinerskole", "steiner",
+    "waldorf", "antroposofisk", "årstidsfest", "årstidsspil",
+    "adventsspil", "adventshave", "adventsspiral", "michaelsfest",
+    "sankthansspil", "fortællekunst", "levende fortælling",
+]
+
+# Nicheformater der stort set ikke findes i voksenudgaver. De tæller derfor
+# som et entydigt børnesignal på linje med en oplyst alder — ellers ville de
+# falde på kravet nede i vurder(), fordi de sjældent skriver "for børn".
+NICHE_BOERNE_ORD = [
+    "babyteater", "vuggestueteater", "sanseteater", "sanseforestilling",
+    "sansekoncert", "musiksanseri", "årstidsspil", "adventsspil",
+    "adventshave", "adventsspiral", "musikalsk eventyr",
+]
+
 # Svage børnesignaler — tæller kun som ekstra point, aldrig alene.
 # ("barn" alene fanger voksendramaer som "Hvorfor barnet koger i polentaen".)
 BOERNE_ORD = [
@@ -75,10 +112,10 @@ FRASORTER = [
     "kursus", "aftenskole", "undervisningsforløb", "workshopforløb",
     # baby- og småbørnsformater — ikke scenekunst
     "babysalmesang", "salmesang", "babyrytmik", "rytmik", "legestue",
-    "musikalsk legestue", "krybbespil", "sanserum", "sansetur",
+    "musikalsk legestue", "krybbespil",
     "babybio", "babycafé", "babycafe", "mødregruppe", "barselscafé",
     "krible krable", "brunch", "fællesspisning",
-    "musiksanseri", "sanseri", "balletskole", "danseskole", "klovneløb",
+    "balletskole", "danseskole", "klovneløb",
     "workshop", "billedkunst",
     "læseklub", "læsekreds", "bogklub", "lektiecafé", "lektiehjælp",
     "strikkecafé", "spilklub", "sprogcafé",
@@ -96,7 +133,45 @@ KVALITETSSTEDER = [
     "teater", "scene", "musikhus", "kulturhus", "kulturhotel",
     "gruppe 38", "refleksion", "filuren", "bora bora", "svalegangen",
     "værket", "katapult", "carte blanche", "fængslet", "godsbanen",
+    # nichesteder: det små, det frie og det antroposofiske
+    "steinerskole", "rudolf steiner", "waldorf", "fri skole", "friskole",
+    "hakkehuset", "teaterhus", "scenekunsthus", "prøvesal", "atelier",
 ]
+
+# Spillesteder hvis program i sig selv ER scenekunst for børn. Vi henter
+# enten hele deres program (rene børneteatre) eller kun deres børneafdeling.
+# Derfor er KILDEN barnesignalet — teksten behøver ikke bevise det.
+#
+# Uden dette leverede Teater Refleksion 0 af 8 og Jysk Musikteater 10 af 65,
+# fordi en titel som "Fyrtøjet" hverken nævner teater eller børn. Netop de
+# poetiske smaaformater taber paa at blive maalt paa ordvalg.
+#
+# Bora Bora, Svalegangen og Aarhus Teater staar bevidst IKKE her: vi henter
+# hele deres program, og det er overvejende for voksne.
+BOERNESCENER = [
+    "gruppe 38", "refleksion", "filuren", "jysk musikteater",
+    "silkeborg teater", "randers teater",
+]
+
+# Overskriftsscanningen af HTML opsamler rubrikker og brudstykker som
+# "Fra 16 år", "20." og "Læs mere". Naar kilden alene kan godkende en post,
+# skal skraldet frasorteres foerst — ellers bliver sidemenuer til forestillinger.
+JUNK_TITEL = re.compile(
+    r"^(?:\d+\.?|fra \d+ ?år|\d+\+|læs mere|se mere|køb billet\w*|"
+    r"billetter|program|forestillinger|nyheder|om os|kontakt|luk|"
+    # rubrikker der inddeler et program efter målgruppe
+    r"unge og voksne|børn og unge|for børn|for voksne|for de mindste|"
+    r"aktuelt|kommende|tidligere|arkiv|turné|på turné|repertoire|"
+    # domænenavne fra sidefod og logolinjer, fx "jmts.dk."
+    r"[\w-]+\.(?:dk|com|net|org)\.?)$",
+    re.IGNORECASE,
+)
+
+
+def er_junk_titel(titel: str) -> bool:
+    t = titel.strip().strip(".:–-").strip()
+    return len(t) < 4 or bool(JUNK_TITEL.match(t))
+
 
 # Julesæson-signaler
 JULE_ORD = [
@@ -161,8 +236,19 @@ def vurder(arr: Arrangement, conf: dict) -> tuple[bool, int, str]:
     tekst = _norm(f"{arr.titel} {arr.beskrivelse} {arr.genre}")
     genre = _norm(arr.genre)
 
+    if er_junk_titel(arr.titel):
+        return False, 0, "ikke en forestilling (opsamlet rubrik)"
+
+    # Kun KILDEN må udløse tilliden, aldrig spillestedet. Kultunaut-poster
+    # bærer spillestedets navn, så en match på spillested ville betro enhver
+    # voksenkoncert der tilfældigvis afholdes på Jysk Musikteater.
+    fra_boernescene = any(h in _norm(arr.kilde or "") for h in BOERNESCENER)
+
     negative = _rammer(tekst, FRASORTER)
-    oplevelse = _rammer(tekst, OPLEVELSES_ORD)
+    niche = _rammer(tekst, NICHE_ORD)
+    # Nicheordene tæller på lige fod med de brede oplevelsesord, så en
+    # eurytmiopvisning eller et stueteater kan komme gennem kernekravet.
+    oplevelse = _rammer(tekst, OPLEVELSES_ORD) + niche
     boerne = _rammer(tekst, BOERNE_ORD)
     boernegenre = genre in BOERNEGENRER
 
@@ -173,10 +259,17 @@ def vurder(arr: Arrangement, conf: dict) -> tuple[bool, int, str]:
 
     # Kernekrav: der skal være en scene-, musik- eller fortælleoplevelse.
     # Uden det er det ikke den slags, digesten handler om.
-    if not oplevelse:
+    if not oplevelse and not fra_boernescene:
         return False, 0, "ingen scene-/musikoplevelse nævnt"
 
     point, grunde = 0, []
+    if fra_boernescene:
+        # Vægtes højere end en genre (40), fordi genren sættes af arrangøren
+        # selv, mens et dedikeret børneteaters eget program er en redaktionel
+        # beslutning. Svarer til genre + korrekt alder, som er den anden vej
+        # at blive sikker på at noget er for børn.
+        point += 55
+        grunde.append("børnescene")
     if boernegenre:
         point += 40
         grunde.append(f"genre: {arr.genre}")
@@ -186,6 +279,9 @@ def vurder(arr: Arrangement, conf: dict) -> tuple[bool, int, str]:
     if boerne:
         point += 20
         grunde.append(f"børn: {boerne[0]}")
+    if niche:
+        point += 20
+        grunde.append(f"niche: {niche[0]}")
 
     overlap = alder_overlapper(arr, conf["alder_fra"], conf["alder_til"])
     if overlap is True:
@@ -203,9 +299,12 @@ def vurder(arr: Arrangement, conf: dict) -> tuple[bool, int, str]:
     # børnegenre, en oplyst alder der passer, eller en eksplicit
     # formulering om at det er for børn/familier.
     strikte = _rammer(tekst, STRIKTE_BOERNE_ORD)
+    # Babyteater og adventsspiraler skriver sjældent "for børn" — formatet
+    # siger det selv. Uden dette ville nicheudvidelsen falde her.
+    strikte += _rammer(tekst, NICHE_BOERNE_ORD)
     if strikte:
         point += 15
-    if not (boernegenre or overlap is True or strikte):
+    if not (boernegenre or overlap is True or strikte or fra_boernescene):
         return False, point, "intet entydigt børnesignal"
 
     # Kvalitetsvægt: professionel scenekunst frem for lokale aktiviteter.

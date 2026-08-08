@@ -157,17 +157,69 @@ def _fra_jsonld(suppe: BeautifulSoup, sted: dict) -> list[Arrangement]:
     return ud
 
 
-def _titel_fra_blok(blok, blok_tekst: str) -> str:
-    """Find den bedste titel inde i en dato-bærende blok."""
+# "Fra 16 år", "3-6 år", "6+", "20." er aldersangivelser og rubrikker —
+# metadata der står som naboer til titlen, ikke titler i sig selv.
+METADATA_RE = re.compile(
+    r"(fra |for |ca\.? )?\d{1,2}\s*([-–]\s*\d{1,2})?\s*(\+|år|årige?|kl\.?)?\.?$",
+    re.IGNORECASE,
+)
+
+
+ORD_RE = re.compile(r"[a-zæøå]{3,}", re.IGNORECASE)
+# Ord der kun beskriver målgruppe eller tid — en titel kan ikke bestå af dem.
+IKKE_TITELORD = {"år", "årige", "kla", "klasse", "fra", "for", "ca", "kl", "og"}
+
+
+def _brugbar_titel(t: str) -> bool:
+    t = t.strip()
+    if not (2 < len(t) < 95):
+        return False
+    if DATO_RE.fullmatch(t) or METADATA_RE.fullmatch(t):
+        return False
+    # "2 - 4 år 22" slipper gennem regexet ovenfor, men er stadig kun alder.
+    # Kræv mindst ét rigtigt ord.
+    return any(o.lower() not in IKKE_TITELORD for o in ORD_RE.findall(t))
+
+
+def _titel_fra_blok(blok, blok_tekst: str, sted: dict | None = None) -> str:
+    """Find den bedste titel til en dato-bærende blok.
+
+    Rækkefølgen er afgørende og fundet ved at prøve begge sidetyper:
+
+      1. Overskrift INDE i blokken.
+      2. Teksten før datoen i blokken. RapidWeaver-sider (Silkeborg Teater)
+         har titel og dato i samme klump uden overskrifter overhovedet.
+      3. Først derefter baglæns i dokumentet. Elementor-sider (Teater
+         Refleksion) lægger titel og dato i hver sin widget, så blokken kun
+         indeholder "Fra 16 år" eller "20.".
+
+    Trin 3 må ikke komme før trin 2: gør det, finder Silkeborg Teaters sider
+    deres egen sidehoved-overskrift og alle forestillinger kommer til at
+    hedde "Silkeborg Teater".
+    """
     for vaelger in ("h1", "h2", "h3", "h4", "h5", ".title", "strong", "b", "a"):
         el = blok.select_one(vaelger)
-        if el:
-            t = el.get_text(" ", strip=True)
-            if 2 < len(t) < 95 and not DATO_RE.fullmatch(t.strip()):
-                return t
-    # Ellers: teksten før datoen, afkortet ved første skilletegn
+        if el and _brugbar_titel(el.get_text(" ", strip=True)):
+            return el.get_text(" ", strip=True)
+
     foer = DATO_RE.split(blok_tekst)[0].strip(" -–·|,")
+    if _brugbar_titel(foer):
+        return foer[:90].strip()
+
+    # Sidehoveder og logolinjer gentager spillestedets eget navn — det er
+    # aldrig en forestillingstitel.
+    eget_navn = _norm_navn(sted["navn"]) if sted else ""
+    for h in blok.find_all_previous(["h1", "h2", "h3", "h4"], limit=8):
+        t = h.get_text(" ", strip=True)
+        if _brugbar_titel(t) and _norm_navn(t) not in (eget_navn, ""):
+            if not (eget_navn and _norm_navn(t) in eget_navn):
+                return t
+
     return foer[:90].strip()
+
+
+def _norm_navn(t: str) -> str:
+    return re.sub(r"[^a-zæøå0-9]+", "", t.lower())
 
 
 def _fra_blokke(suppe: BeautifulSoup, sted: dict) -> list[Arrangement]:
@@ -195,7 +247,7 @@ def _fra_blokke(suppe: BeautifulSoup, sted: dict) -> list[Arrangement]:
         d = _tekstdato(tekst)
         if not d:
             continue
-        titel = _titel_fra_blok(el, tekst)
+        titel = _titel_fra_blok(el, tekst, sted)
         if not titel or len(titel) < 3:
             continue
         noegle = (titel.lower(), d)

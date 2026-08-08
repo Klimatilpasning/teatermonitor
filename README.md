@@ -25,6 +25,34 @@ python monitor.py --toer
 | `python monitor.py --nulstil` | Glem hvad der er set før. |
 | `python byg_side.py` | Byg den offentlige side i `udbakke/side.html`. |
 
+## Justering af filtreringen
+
+Hentning tager ~20 minutter, filtrering et øjeblik. Test derfor mod en cache
+i stedet for at hente forfra hver gang:
+
+```bash
+python test_filter.py --hent    # hent én gang, læg i cachen
+python test_filter.py           # filtrér cachen, vis tallene
+python test_filter.py --niche   # vis hvad nicheordene henter ind
+```
+
+### Hvorfor kilden vejer tungere end teksten
+
+Filtret krævede oprindeligt, at *teksten* beviste både at noget var scenekunst
+og at det var for børn. Det udelukkede de dedikerede børneteatre: en titel som
+*Bænken* eller *Himmelsange* siger ingen af delene. Teater Refleksion leverede
+0 ud af 8.
+
+Derfor er `BOERNESCENER` en liste over kilder, hvis program i sig selv er
+scenekunst for børn. Kommer en post derfra, behøver teksten ikke bevise noget.
+
+**Tilliden knytter sig til `kilde`, aldrig til `spillested`.** Kultunaut-poster
+bærer spillestedets navn, så en match på spillested ville betro enhver
+voksenkoncert afholdt på Jysk Musikteater.
+
+Bora Bora, Svalegangen og Aarhus Teater står bevidst ikke på listen — deres
+program hentes i sin helhed og er overvejende for voksne.
+
 ## Ugentlig kørsel
 
 Kører i GitHub Actions hver **mandag 05:30 UTC** (07:30 dansk sommertid) —

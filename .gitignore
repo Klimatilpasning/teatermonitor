@@ -6,6 +6,8 @@ __pycache__/
 *.pyc
 udbakke/
 state/koersler.log
+# Testcache med rådata — stor og genskabes med: python test_filter.py --hent
+state/raadata.pickle
 
 # Bemærk: state/set.json ER med i repoet med vilje — den er systemets
 # hukommelse om hvad der allerede er vist, og skal overleve mellem kørsler.
