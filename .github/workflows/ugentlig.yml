@@ -18,6 +18,10 @@ concurrency:
 jobs:
   koer:
     runs-on: ubuntu-latest
+    # En normal kørsel tager ~15 min (112 kommune/genre-opslag mod Kultunaut
+    # plus ~30 spillesteder). Afviser Kultunaut GitHubs IP'er, løber hvert
+    # opslag i timeout og retry, og kørslen ville ellers kunne tage timer.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
@@ -60,10 +64,27 @@ jobs:
             git push
           fi
 
-      - name: Gem logfil som artefakt ved fejl
-        if: failure()
+      # Afsendelsestrinnet er continue-on-error, saa jobbet taeller som
+      # lykkedes selv naar mailen fejler. Derfor ville en if: failure()-
+      # betingelse her aldrig udloese, og loggen ville vaere utilgaengelig
+      # netop naar den var mest brugbar. Gem den altid.
+      - name: Gem logfil som artefakt
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: teatermonitor-log
           path: state/koersler.log
           if-no-files-found: ignore
+
+      # state/set.json skrives foerst naar afsendelsen er lykkedes, og er
+      # derfor den paalidelige indikator for om mailen faktisk gik ud.
+      - name: Opsummer resultat
+        if: always()
+        run: |
+          if [ -f state/set.json ]; then
+            echo "### Mailen blev sendt" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Mailen blev IKKE sendt" >> "$GITHUB_STEP_SUMMARY"
+            echo "Siden er opdateret, men afsendelsen fejlede." >> "$GITHUB_STEP_SUMMARY"
+            echo "Hent artefakten \`teatermonitor-log\` for aarsagen." >> "$GITHUB_STEP_SUMMARY"
+          fi
