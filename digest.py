@@ -151,7 +151,7 @@ def _klubafsnit(anbefalinger: list[dict], dynamiske: dict[str, list[dict]]) -> s
 
 def byg_html(godkendte: list[Arrangement], nye_id: set[str], conf: dict,
              klub_anbefalinger: list[dict], klub_dynamiske: dict[str, list[dict]],
-             kildestatus: list[dict]) -> str:
+             kildestatus: list[dict], voksne: list[Arrangement] | None = None) -> str:
     i_dag = date.today()
     kerne = set(conf["kerne_kommuner"])
 
@@ -208,17 +208,28 @@ def byg_html(godkendte: list[Arrangement], nye_id: set[str], conf: dict,
   <h1>Børneteater i Østjylland</h1>
   <p class="dato">{dansk_dato(i_dag)} {i_dag.year} · Silkeborg og Aarhus i fokus</p>
   {krop}
+  {_afsnit("Til de voksne — det bedste på scenerne", voksne or [], nye_id, 12)}
   {_klubafsnit(klub_anbefalinger, klub_dynamiske)}
   <p class="fod">{html.escape(fodnote)}<br>
   "Populær" er et skøn ud fra antal opførelser og turné — ikke billetsalgstal.</p>
 </div></body></html>"""
 
 
-def byg_tekst(godkendte: list[Arrangement], nye_id: set[str]) -> str:
+def byg_tekst(godkendte: list[Arrangement], nye_id: set[str],
+              voksne: list[Arrangement] | None = None) -> str:
     linjer = [f"BØRNETEATER I ØSTJYLLAND — {date.today().isoformat()}", ""]
     if not godkendte:
         linjer.append("Ingen arrangementer matchede denne gang.")
-    for arr in godkendte:
+    linjer += _tekstlinjer(godkendte, nye_id)
+    if voksne:
+        linjer += ["", "TIL DE VOKSNE — DET BEDSTE PÅ SCENERNE", ""]
+        linjer += _tekstlinjer(voksne, nye_id)
+    return "\n".join(linjer)
+
+
+def _tekstlinjer(poster: list[Arrangement], nye_id: set[str]) -> list[str]:
+    linjer: list[str] = []
+    for arr in poster:
         maerker = []
         if arr.id in nye_id:
             maerker.append("NYT")
@@ -233,4 +244,4 @@ def byg_tekst(godkendte: list[Arrangement], nye_id: set[str]) -> str:
                       f"{arr.spillested or arr.kilde}, {arr.kommune}{suffix}")
         if arr.link:
             linjer.append(f"  {arr.link}")
-    return "\n".join(linjer)
+    return linjer

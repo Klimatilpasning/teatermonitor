@@ -190,6 +190,14 @@ footer a{color:var(--sage)}
 <p class="tael" id="tael"></p>
 <div id="resultat"></div>
 
+<section class="klubber" id="voksenafsnit" hidden>
+  <h2 style="margin:0;font-size:22px;letter-spacing:-.02em">Til de voksne</h2>
+  <p class="manchet" style="margin-top:8px">Når børnene er lagt i seng. Et
+     stramt udvalg af de forestillinger der rager op — målt på de store huse,
+     turnéer og antal opførelser.</p>
+  <div id="voksne"></div>
+</section>
+
 <section class="klubber">
   <h2 style="margin:0;font-size:22px;letter-spacing:-.02em">Klubber værd at melde sig ind i</h2>
   <p class="manchet" style="margin-top:8px">Vurderet på hvad de er værd
@@ -212,6 +220,7 @@ footer a{color:var(--sage)}
 
 <script>
 const DATA = __DATA__;
+const VOKSNE = __VOKSNE__;
 const KLUBBER = __KLUBBER__;
 const UGE = ["man","tir","ons","tor","fre","lør","søn"];
 const MDR = ["","januar","februar","marts","april","maj","juni","juli",
@@ -330,6 +339,14 @@ document.getElementById("soeg").addEventListener("input",e=>{
   tilstand.soeg = e.target.value; tegn();
 });
 
+// Voksenafsnittet er statisk: det er et redaktionelt udvalg, ikke en liste
+// man filtrerer i. Afsnittet skjules helt, hvis der intet er at vise.
+if(VOKSNE.length){
+  document.getElementById("voksenafsnit").hidden = false;
+  document.getElementById("voksne").innerHTML =
+    '<div class="liste">' + VOKSNE.map(kort).join("") + '</div>';
+}
+
 document.getElementById("klubber").innerHTML = KLUBBER.map(k=>
   '<div class="klub">'
   + '<span class="vaerdi v-'+k.boernevaerdi+'">børneværdi: '+k.boernevaerdi+'</span>'
@@ -360,6 +377,7 @@ def byg() -> Path:
 
     html = (SIDE
             .replace("__DATA__", json.dumps(arr, ensure_ascii=False))
+            .replace("__VOKSNE__", json.dumps(data.get("voksne", []), ensure_ascii=False))
             .replace("__KLUBBER__", json.dumps(data.get("klubber", []), ensure_ascii=False))
             .replace("__KERNE__", json.dumps(data.get("kerne_kommuner", []), ensure_ascii=False))
             .replace("__REJSE__", json.dumps(rejse, ensure_ascii=False))

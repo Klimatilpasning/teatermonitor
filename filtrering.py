@@ -321,6 +321,98 @@ def vurder(arr: Arrangement, conf: dict) -> tuple[bool, int, str]:
     return True, point, ", ".join(grunde) or "medtaget"
 
 
+# --- Voksenafsnittet ------------------------------------------------------
+# Filtret smider alt voksenindhold væk. Men Gruppe 38, Aarhus Teater og
+# Svalegangen laver scenekunst der er en aften værd, og den bør ikke gå tabt
+# alene fordi den ikke er for børn. Her samles de ganske få der rager op.
+#
+# Bevidst en STRAM liste: pointer for de store huse, turné og mange
+# opførelser. Uden en høj tærskel bliver afsnittet til endnu en programoversigt,
+# og så er det ikke længere "det absolut bedste".
+VOKSEN_MAKS = 12
+VOKSEN_TAERSKEL = 45
+VOKSEN_PR_KOMMUNE = 3
+
+
+def _prominens(arr: Arrangement, kerne: set[str] | None = None) -> int:
+    tekst = _norm(f"{arr.titel} {arr.beskrivelse} {arr.genre}")
+    sted = _norm(arr.spillested)
+    point = 0
+    if _rammer(tekst, STORE_TEGN):
+        point += 30
+    if any(h in sted for h in STORE_HUSE):
+        point += 25
+    # Vægtes højt: det er de kunstnerisk tunge scener. Uden dette faldt
+    # Gruppe 38s voksenforestillinger ud, fordi deres titler er nøgne
+    # ("Marias Testamente") og siderne ikke skriver ordet teater.
+    if _rammer(sted, KVALITETSSTEDER):
+        point += 30
+    if _rammer(tekst, KVALITETSTEGN):
+        point += 15
+    # En tirsdag aften i Vejle er noget andet end en i Aarhus. Uden dette
+    # blev afsnittet til syv musicals i rejsekommunerne.
+    if kerne and arr.kommune in kerne:
+        point += 25
+    # Mange opførelser og turné er de eneste efterspørgselssignaler vi har.
+    point += min(getattr(arr, "antal_visninger", 1), 8) * 2
+    point += (getattr(arr, "antal_kommuner", 1) - 1) * 10
+    return point
+
+
+def voksen_top(arrangementer: list[Arrangement], conf: dict,
+               undgaa: set[str], maks: int = VOKSEN_MAKS) -> list[Arrangement]:
+    """De få voksenforestillinger der er en aften værd.
+
+    ``undgaa`` er id'erne på det, der allerede er med som børneteater —
+    ellers ville familieforestillinger optræde to gange i samme mail.
+    """
+    kandidater = []
+    for arr in arrangementer:
+        if arr.id in undgaa or not i_horisont(arr, conf["horisont_dage"]):
+            continue
+        if er_junk_titel(arr.titel):
+            continue
+        tekst = _norm(f"{arr.titel} {arr.beskrivelse} {arr.genre}")
+        if _rammer(tekst, FRASORTER):
+            continue
+        if not _rammer(tekst, OPLEVELSES_ORD + NICHE_ORD):
+            continue
+        # Noget med tydeligt børnesignal hører ikke hjemme her. Er det godt
+        # nok, står det ovenfor; er det ikke, var der en grund.
+        if _norm(arr.genre) in BOERNEGENRER or _rammer(tekst, STRIKTE_BOERNE_ORD):
+            continue
+        kandidater.append(arr)
+
+    kandidater = gruppér(kandidater)
+    berig(kandidater)
+
+    kerne = set(conf.get("kerne_kommuner", []))
+    scoret = [(a, _prominens(a, kerne)) for a in kandidater]
+    scoret = [(a, p) for a, p in scoret if p >= VOKSEN_TAERSKEL]
+    scoret.sort(key=lambda t: -t[1])
+
+    # Samme turné spiller i flere byer. gruppér() holder dem adskilt, fordi
+    # spillestedet indgår i nøglen — men i en top-12 må TINA ikke bruge tre
+    # pladser. Den højest scorende opsætning vinder, og med kernebonussen
+    # er det den nærmeste.
+    # Loft pr. kommune, ellers æder Vejle Musikteaters musicalprogram hele
+    # afsnittet og de mindre, kunstnerisk tunge scener kommer aldrig med.
+    valgt, sete_titler = [], set()
+    pr_kommune: dict[str, int] = {}
+    for arr, _ in scoret:
+        n = _norm(arr.titel)
+        if n in sete_titler or pr_kommune.get(arr.kommune, 0) >= VOKSEN_PR_KOMMUNE:
+            continue
+        sete_titler.add(n)
+        pr_kommune[arr.kommune] = pr_kommune.get(arr.kommune, 0) + 1
+        valgt.append(arr)
+        if len(valgt) >= maks:
+            break
+
+    valgt.sort(key=lambda a: (a.dato is None, a.dato or date.max, a.titel))
+    return valgt
+
+
 def i_horisont(arr: Arrangement, dage: int) -> bool:
     if arr.dato is None:
         return True

@@ -54,11 +54,11 @@ def gem_set(kendte: dict) -> None:
 
 
 def eksporter_data(godkendte: list, nye_id: set[str], conf: dict,
-                   anbefalinger: list[dict]) -> None:
+                   anbefalinger: list[dict], voksne: list | None = None) -> None:
     """Skriv et maskinlæsbart udtræk, som den offentlige side bygges af."""
-    poster = []
-    for arr in godkendte:
-        poster.append({
+
+    def som_post(arr) -> dict:
+        return {
             "id": arr.id,
             "titel": arr.titel,
             "beskrivelse": arr.beskrivelse,
@@ -75,13 +75,16 @@ def eksporter_data(godkendte: list, nye_id: set[str], conf: dict,
             "efterspoergsel": list(getattr(arr, "efterspoergsel", [])),
             "point": getattr(arr, "point", 0),
             "ny": arr.id in nye_id,
-        })
+        }
+
+    poster = [som_post(a) for a in godkendte]
     data = {
         "opdateret": datetime.now().isoformat(timespec="seconds"),
         "antal": len(poster),
         "kerne_kommuner": conf["kerne_kommuner"],
         "alder": [conf["alder_fra"], conf["alder_til"]],
         "arrangementer": poster,
+        "voksne": [som_post(a) for a in (voksne or [])],
         "klubber": anbefalinger,
     }
     sti = UDBAKKE_DIR / "data.json"
@@ -123,15 +126,21 @@ def koer(conf: dict, toer: bool, alt_som_nyt: bool) -> int:
     dynamiske = klubber.hent_dynamiske(conf["kerne_kommuner"], log=log) if vis_klubber else {}
     anbefalinger = alle_anbefalinger if vis_klubber else []
 
-    html_krop = digest.byg_html(godkendte, nye_id, conf, anbefalinger, dynamiske, kildestatus)
-    tekst_krop = digest.byg_tekst(godkendte, nye_id)
+    # Voksenafsnittet vælges fra de RÅ data, ikke fra de godkendte: alt
+    # voksenindhold er allerede sorteret fra på det tidspunkt.
+    voksne = filtrering.voksen_top(raa, conf, {a.id for a in godkendte})
+    log(f"  Til voksenafsnittet: {len(voksne)}")
+
+    html_krop = digest.byg_html(godkendte, nye_id, conf, anbefalinger, dynamiske,
+                                kildestatus, voksne)
+    tekst_krop = digest.byg_tekst(godkendte, nye_id, voksne)
 
     stempel = date.today().isoformat()
     fil = UDBAKKE_DIR / f"digest-{stempel}.html"
     fil.write_text(html_krop, encoding="utf-8")
     log(f"  Skrev {fil}")
 
-    eksporter_data(godkendte, nye_id, conf, alle_anbefalinger)
+    eksporter_data(godkendte, nye_id, conf, alle_anbefalinger, voksne)
 
     emne = f"Børneteater i Østjylland — {len(nye_id)} nye ({stempel})"
     if toer:
